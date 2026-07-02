@@ -87,7 +87,7 @@ export function Sidebar({ expanded, onToggle }: SidebarProps) {
         </div>
       )}
 
-      <nav className="flex-1 overflow-y-auto pb-4">
+      <nav className="flex-1 overflow-y-auto pb-4 sidebar-scroll">
         {NAV_SECTIONS.map((section, idx) => (
           <div key={section.title} className={clsx(expanded && "px-5", idx > 0 && (expanded ? "mt-4" : "mt-3"))}>
             {expanded ? (
