@@ -164,16 +164,29 @@ tools — not hand-guessed. Design tokens live in `src/lib/colors.ts` and the
 - **Custom range picker**: uses native `<input type="datetime-local">` rather
   than a custom calendar widget, to keep the component footprint small; swap
   in a richer date-range component later if the design calls for one.
+- **App shell sidebar** (`src/components/layout/Sidebar.tsx`): sourced from
+  Figma nodes `22263:143589` (collapsed) and `25749:143614` (expanded) — the
+  full CMC EDR product nav, not something the BA spec defines. Only
+  "Dashboards → Manage" is a real route (this app); every other item
+  (Vulnerability Detection, Reporting, Security Management, System
+  Management, Threat Detection/Alert/Case Management, Configuration, etc.)
+  is rendered for visual completeness but is `disabled` — there's no
+  corresponding page or route to send it to, and adding a router for 23
+  pages the spec never describes would be inventing scope. Icons are
+  hand-drawn local SVGs approximating each Figma icon's concept (grid, bug,
+  shield, bell, ...) rather than pixel-exact exports, since Figma's
+  per-node asset URLs are short-lived (7 days) and unsuitable to hardcode.
 
 ## Project structure
 
 ```
 src/
-  app/            App shell (Layout, App) — QueryClientProvider + header
+  app/            App shell (Layout, App) — QueryClientProvider + header + sidebar
   components/
     charts/       Recharts wrappers: Donut, BarChartHorizontal, Column, LineChartMulti, NumberCard
     ui/           Card, WidgetContainer (loading/no-data/error), Skeleton, NoData, ErrorState, Legend
-    filters/      DateTimePicker, QuickRange, NoDataToggle
+    filters/      DateTimePicker, QuickRange, NoDataToggle, TenantFilter
+    layout/       Sidebar (collapsed/expanded product nav), navigation.ts, navIcons.tsx
   features/       14 widgets grouped by BA domain: agents, events, detection, alerts, cases
   store/          useDashboardStore (time range UI state only)
   api/            fetch client, query keys, React Query hooks

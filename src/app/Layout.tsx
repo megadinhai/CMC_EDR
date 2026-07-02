@@ -1,8 +1,9 @@
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import clsx from "clsx";
 import { DateTimePicker } from "@/components/filters/DateTimePicker";
 import { NoDataToggle } from "@/components/filters/NoDataToggle";
 import { TenantFilter } from "@/components/filters/TenantFilter";
+import { Sidebar } from "@/components/layout/Sidebar";
 import { useRefreshAll } from "@/api/hooks";
 
 function RefreshButton() {
@@ -47,23 +48,28 @@ function Breadcrumb() {
 }
 
 export function Layout({ children }: { children: ReactNode }) {
+  const [sidebarExpanded, setSidebarExpanded] = useState(false);
+
   return (
-    <div className="min-h-screen bg-surface">
-      <header className="border-b border-surface-border px-10 py-8">
-        <div className="mx-auto flex max-w-[1920px] items-start justify-between gap-4">
-          <div className="flex flex-col gap-5">
-            <Breadcrumb />
-            <h1 className="text-[35px] font-bold leading-none text-white">Dashboard</h1>
+    <div className="flex min-h-screen bg-surface">
+      <Sidebar expanded={sidebarExpanded} onToggle={() => setSidebarExpanded((v) => !v)} />
+      <div className="min-w-0 flex-1">
+        <header className="border-b border-surface-border px-10 py-8">
+          <div className="mx-auto flex max-w-[1920px] items-start justify-between gap-4">
+            <div className="flex flex-col gap-5">
+              <Breadcrumb />
+              <h1 className="text-[35px] font-bold leading-none text-white">Dashboard</h1>
+            </div>
+            <div className="flex items-center gap-3 pt-1">
+              <NoDataToggle />
+              <TenantFilter />
+              <DateTimePicker />
+              <RefreshButton />
+            </div>
           </div>
-          <div className="flex items-center gap-3 pt-1">
-            <NoDataToggle />
-            <TenantFilter />
-            <DateTimePicker />
-            <RefreshButton />
-          </div>
-        </div>
-      </header>
-      <main className="mx-auto max-w-[1920px] px-10 py-8">{children}</main>
+        </header>
+        <main className="mx-auto max-w-[1920px] px-10 py-8">{children}</main>
+      </div>
     </div>
   );
 }
