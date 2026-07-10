@@ -23,7 +23,7 @@ GitHub Pages deploy below.
 
 Pushing to `main` triggers `.github/workflows/deploy-pages.yml`, which builds
 the app and deploys `dist/` via `actions/deploy-pages`. Live at
-`https://cmcer.github.io/CMC_EDR/`.
+`https://megadinhai.github.io/CMC_EDR/`.
 
 One-time setup required in the repo (not doable from the CLI): **Settings →
 Pages → Source → GitHub Actions**.
